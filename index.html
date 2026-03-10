@@ -114,29 +114,21 @@ function updateTimer() {
     let difference = targetDate - now;
 
     if (difference <= 0) {
-        document.getElementById("timer").innerHTML = "00:00:00:00";
+        document.getElementById("timer").innerHTML = "00:00";
         return;
     }
-
-    const hours = Math.floor(difference / (1000 * 60 * 60));
-    difference %= (1000 * 60 * 60);
 
     const minutes = Math.floor(difference / (1000 * 60));
     difference %= (1000 * 60);
 
     const seconds = Math.floor(difference / 1000);
 
-    // MILISSEGUNDOS COM 2 DÍGITOS (0-99)
-    const milliseconds = Math.floor((difference % 1000) / 10);
-
     document.getElementById("timer").innerHTML =
-        String(hours).padStart(2, '0') + ":" +
         String(minutes).padStart(2, '0') + ":" +
-        String(seconds).padStart(2, '0') + ":" +
-        String(milliseconds).padStart(2, '0');
+        String(seconds).padStart(2, '0');
 }
 
-setInterval(updateTimer, 10);
+setInterval(updateTimer, 1000);
 
 let tocando = false; // flag para saber se está tocando
 
@@ -157,3 +149,4 @@ document.addEventListener("click", function () {
 </body>
 
 </html>
+
