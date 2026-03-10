@@ -51,7 +51,7 @@ body {
 
 @font-face {
     font-family: 'JujutsuKaisen';
-    src: url('/Fonts/JujutsuKaisen.ttf') format('truetype');
+    src: url('Fonts/JujutsuKaisen.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -441,4 +441,5 @@ h1 {
     #document::-webkit-scrollbar { width: 3px; }
     #document::-webkit-scrollbar-track { background: #111; }
     #document::-webkit-scrollbar-thumb { background: #A67C00; border-radius: 2px; }
+
 }
