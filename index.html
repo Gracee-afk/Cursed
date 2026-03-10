@@ -18,72 +18,69 @@ body{
     text-align:center;
 }
 
-/* WRAPPER PRINCIPAL */
+/* containers */
 
-.wrapper{
+.main-wrapper{
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:10px;
+    gap:8px;
 }
 
-/* SIMBOLO */
+.rotate-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+}
+
+/* símbolo */
 
 .symbol{
     width:clamp(90px,18vw,180px);
-    animation:pulse 2s ease-in-out infinite, glow 2s ease-in-out infinite;
+    animation:pulse 2s infinite, glow 2s infinite;
 }
 
-/* LOADING */
+/* loading */
 
 .loading-text{
     color:white;
     font-size:clamp(16px,3vw,26px);
     letter-spacing:6px;
-    margin-top:10px;
-    margin-bottom:0px;
+    margin-top:8px;
     position:relative;
 
-    animation:
-    pulse 2s infinite,
-    textGlow 2s infinite;
+    animation:pulse 2s infinite, textGlow 2s infinite;
 }
 
-/* TIMER */
+/* timer */
 
 .timer{
     color:white;
     font-size:clamp(18px,3.5vw,30px);
     letter-spacing:6px;
     font-weight:bold;
-    margin-top:0px;
     position:relative;
 
-    animation:
-    pulse 2s infinite,
-    textGlow 2s infinite;
+    animation:pulse 2s infinite, textGlow 2s infinite;
 }
 
-/* EFEITO GLITCH */
+/* glitch */
 
 .loading-text::after,
 .timer::after{
-
-content:attr(data-text);
-
-position:absolute;
-left:0;
-top:0;
-
-color:#ff0000;
-opacity:0.3;
-
-animation:glitchText 2s infinite;
-
+    content:attr(data-text);
+    position:absolute;
+    left:0;
+    top:0;
+    color:red;
+    opacity:0.3;
+    animation:glitchText 2s infinite;
 }
 
-/* AVISO ROTACIONAR */
+/* aviso virar */
 
 #rotate-warning{
     position:fixed;
@@ -96,11 +93,8 @@ animation:glitchText 2s infinite;
     z-index:9999;
 }
 
-/* TEXTO ROTACIONAR */
-
 .rotate-text{
     font-size:22px;
-    opacity:0.8;
 
     animation:
     pulse 2s infinite,
@@ -108,66 +102,33 @@ animation:glitchText 2s infinite;
     glitchText 3s infinite;
 }
 
-/* ANIMAÇÕES */
+/* animações */
 
 @keyframes pulse{
-
 0%{opacity:0.5}
 50%{opacity:1}
 100%{opacity:0.5}
-
 }
 
 @keyframes glow{
-
 0%{filter:drop-shadow(0 0 5px red)}
 50%{filter:drop-shadow(0 0 25px red)}
 100%{filter:drop-shadow(0 0 5px red)}
-
 }
 
 @keyframes textGlow{
-
-0%{
-text-shadow:0 0 5px white;
-}
-
-50%{
-text-shadow:
-0 0 10px red,
-0 0 20px red,
-0 0 30px red;
-}
-
-100%{
-text-shadow:0 0 5px white;
-}
-
+0%{text-shadow:0 0 5px white}
+50%{text-shadow:0 0 10px red,0 0 20px red,0 0 30px red}
+100%{text-shadow:0 0 5px white}
 }
 
 @keyframes glitchText{
-
 0%{transform:translate(0)}
 20%{transform:translate(-1px,1px)}
 40%{transform:translate(1px,-1px)}
 60%{transform:translate(-1px,-1px)}
 80%{transform:translate(1px,1px)}
 100%{transform:translate(0)}
-
-}
-
-/* RESPONSIVO */
-
-@media screen and (max-width:768px) and (orientation:portrait){
-
-#rotate-warning{
-display:flex;
-}
-
-.wrapper{
-display:none;
-}
-
 }
 
 </style>
@@ -175,18 +136,18 @@ display:none;
 
 <body>
 
-<!-- AVISO DE VIRAR -->
+<!-- aviso virar -->
 
 <div id="rotate-warning">
-    <div class="wrapper">
+    <div class="rotate-wrapper">
         <img src="Imgs/simbolo.svg" class="symbol">
         <div class="rotate-text">Vire o celular para continuar</div>
     </div>
 </div>
 
-<!-- TELA PRINCIPAL -->
+<!-- tela principal -->
 
-<div class="wrapper">
+<div class="main-wrapper" id="main">
 
 <img src="Imgs/simbolo.svg" class="symbol">
 
@@ -202,11 +163,9 @@ Loading...
 
 <script>
 
-/* DATA ALVO */
+/* TIMER */
 
 const targetDate = new Date(2026,2,10,20,0,0).getTime();
-
-/* TIMER */
 
 function updateTimer(){
 
@@ -216,13 +175,10 @@ let difference = targetDate - now;
 
 if(difference <= 0){
 
-const timer = document.getElementById("timer");
-
-timer.innerHTML = "00:00";
+timer.innerHTML="00:00";
 timer.setAttribute("data-text","00:00");
 
 return;
-
 }
 
 const minutes = Math.floor(difference/(1000*60));
@@ -232,22 +188,44 @@ difference %= (1000*60);
 const seconds = Math.floor(difference/1000);
 
 const timeString =
-String(minutes).padStart(2,'0')
-+
-":"
-+
+String(minutes).padStart(2,'0') +
+":" +
 String(seconds).padStart(2,'0');
-
-const timer = document.getElementById("timer");
 
 timer.innerHTML = timeString;
 timer.setAttribute("data-text",timeString);
 
 }
 
+const timer = document.getElementById("timer");
+
 setInterval(updateTimer,1000);
 
 updateTimer();
+
+/* controle orientação */
+
+function checkOrientation(){
+
+const rotate = document.getElementById("rotate-warning");
+const main = document.getElementById("main");
+
+if(window.innerHeight > window.innerWidth){
+
+rotate.style.display="flex";
+main.style.display="none";
+
+}else{
+
+rotate.style.display="none";
+main.style.display="flex";
+
+}
+
+}
+
+window.addEventListener("resize",checkOrientation);
+window.addEventListener("load",checkOrientation);
 
 </script>
 
