@@ -3,257 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cursed</title>
-<link rel="stylesheet" href="Style/Page.css">
+<title>Modo Paisagem Obrigatório</title>
 
 <style>
-    body {
-        margin: 0;
-        background: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        min-height: 100vh; /* essencial para centralização vertical no celular */
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
 
-    /* IMAGEM MENOR */
-    .symbol {
-        width: clamp(90px, 18vw, 180px);
-        animation: pulse 2s ease-in-out infinite, glow 2s ease-in-out infinite;
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
-    }
+body{
+    margin:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    text-align:center;
+}
 
-    /* Animação do brilho */
-    @keyframes glow {
-        0% { filter: drop-shadow(0 0 5px rgba(255, 0, 0, 1)); }
-        50% { filter: drop-shadow(0 0 25px rgba(255, 0, 0, 1)); }
-        100% { filter: drop-shadow(0 0 5px rgba(255, 0, 0, 1)); }
-    }
+/* WRAPPER PRINCIPAL */
 
-    /* LOADING MENOR */
-    .loading-text {
-        margin-top: 10px;
-        margin-bottom: 2px; /* aproxima do contador */
-        color: white;
-        font-size: clamp(14px, 2.8vw, 24px);
-        letter-spacing: 6px;
+.wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
 
-        animation:
-        pulse 2s ease-in-out infinite,
-        textGlow 2s ease-in-out infinite;
-    }
+/* SIMBOLO */
 
-    /* TIMER MENOR */
-    .timer {
-        margin-top: 0px; /* remove espaço */
-        color: white;
-        font-size: clamp(16px, 3.5vw, 28px);
-        letter-spacing: 6px;
-        font-weight: bold;
+.symbol{
+    width:clamp(90px,18vw,180px);
+    animation:pulse 2s ease-in-out infinite, glow 2s ease-in-out infinite;
+}
 
-        animation:
-        pulse 2s ease-in-out infinite,
-        textGlow 2s ease-in-out infinite;
-    }
+/* LOADING */
 
-    @keyframes textGlow {
-        0% {
-            text-shadow: 0 0 5px #fff;
-        }
+.loading-text{
+    color:white;
+    font-size:clamp(16px,3vw,26px);
+    letter-spacing:6px;
+    margin-top:10px;
+    margin-bottom:0px;
+    position:relative;
 
-        50% {
-            text-shadow:
-            0 0 10px #ff0000,
-            0 0 20px #ff0000,
-            0 0 30px #ff0000;
-        }
+    animation:
+    pulse 2s infinite,
+    textGlow 2s infinite;
+}
 
-        100% {
-            text-shadow: 0 0 5px #fff;
-        }
-    }
+/* TIMER */
 
-    .loading-text,
-    .timer{
-        position:relative;
-    }
+.timer{
+    color:white;
+    font-size:clamp(18px,3.5vw,30px);
+    letter-spacing:6px;
+    font-weight:bold;
+    margin-top:0px;
+    position:relative;
 
-    .loading-text::after,
-    .timer::after{
-        content:attr(data-text);
-        position:absolute;
-        left:0;
-        top:0;
-        color:#ff0000;
-        opacity:0.2;
-        animation:glitchText 2s infinite;
-    }
+    animation:
+    pulse 2s infinite,
+    textGlow 2s infinite;
+}
 
-    @keyframes glitchText{
-        0%{transform:translate(0)}
-        20%{transform:translate(-1px,1px)}
-        40%{transform:translate(1px,-1px)}
-        60%{transform:translate(-1px,-1px)}
-        80%{transform:translate(1px,1px)}
-        100%{transform:translate(0)}
-    }
+/* EFEITO GLITCH */
 
-    /* PISCAR SUAVE */
-    @keyframes pulse {
-        0% { opacity: 0.5; }
-        50% { opacity: 1; }
-        100% { opacity: 0.5; }
-    }
+.loading-text::after,
+.timer::after{
 
-    /* --- RESPONSIVIDADE PARA CELULAR --- */
-    @media (max-width: 600px) {
-        /* Símbolo maior no celular */
-        .symbol {
-            width: 90%;           /* ocupa 90% da largura da tela */
-            max-width: 400px;     /* limite máximo */
-            height: auto;         /* mantém proporção */
-        }
+content:attr(data-text);
 
-        /* Texto de "LOADING" maior e responsivo */
-        .loading-text {
-            font-size: 6vw;       /* escala com a tela */
-            margin-top: 25px;
-        }
+position:absolute;
+left:0;
+top:0;
 
-        /* Timer maior e responsivo */
-        .timer {
-            font-size: 7vw;       /* escala com a tela */
-            margin-top: 18px;
-            font-weight: bold;
-        }
+color:#ff0000;
+opacity:0.3;
 
-        /* Centraliza todo o conteúdo dentro do wrapper */
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;         /* ocupa altura total do body */
-        }
+animation:glitchText 2s infinite;
 
-        /* Tela de bloqueio */
-        #rotate-warning {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            color: white;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
+}
 
-        /* Centralização */
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 20px;
-            width: 100%;
-        }
+/* AVISO ROTACIONAR */
 
-        /* Imagem centralizada e responsiva */
-        .symbol {
-            width: clamp(180px, 18vw, 180px);
-            animation: pulse 2s ease-in-out infinite, glow 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
-        }
+#rotate-warning{
+    position:fixed;
+    inset:0;
+    background:#000;
+    color:white;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
 
-        @keyframes glow {
-            0% { filter: drop-shadow(0 0 5px rgba(255, 0, 0, 1)); }
-            50% { filter: drop-shadow(0 0 25px rgba(255, 0, 0, 1)); }
-            100% { filter: drop-shadow(0 0 5px rgba(255, 0, 0, 1)); }
-        }   
+/* TEXTO ROTACIONAR */
 
-        /* Texto LOADING */
-        .loading-text {
-            font-size: 5vw;
-            letter-spacing: 4px;
-        }
+.rotate-text{
+    font-size:22px;
+    opacity:0.8;
 
-        /* Texto para virar a tela */
-        .rotate-text {
-            font-size: 4.5vw;
-            opacity: 0.8;
-            margin-top: 10px;
-        }
+    animation:
+    pulse 2s infinite,
+    textGlow 2s infinite,
+    glitchText 3s infinite;
+}
 
-        /* ATIVA SOMENTE EM CELULAR E EM RETRATO */
-        @media screen and (max-width: 768px) and (orientation: portrait) {
-            #rotate-warning {
-                display: flex;
-            }
+/* ANIMAÇÕES */
 
-            body {
-                overflow: hidden; /* bloqueia scroll */
-            }
-        }
-    }
+@keyframes pulse{
+
+0%{opacity:0.5}
+50%{opacity:1}
+100%{opacity:0.5}
+
+}
+
+@keyframes glow{
+
+0%{filter:drop-shadow(0 0 5px red)}
+50%{filter:drop-shadow(0 0 25px red)}
+100%{filter:drop-shadow(0 0 5px red)}
+
+}
+
+@keyframes textGlow{
+
+0%{
+text-shadow:0 0 5px white;
+}
+
+50%{
+text-shadow:
+0 0 10px red,
+0 0 20px red,
+0 0 30px red;
+}
+
+100%{
+text-shadow:0 0 5px white;
+}
+
+}
+
+@keyframes glitchText{
+
+0%{transform:translate(0)}
+20%{transform:translate(-1px,1px)}
+40%{transform:translate(1px,-1px)}
+60%{transform:translate(-1px,-1px)}
+80%{transform:translate(1px,1px)}
+100%{transform:translate(0)}
+
+}
+
+/* RESPONSIVO */
+
+@media screen and (max-width:768px) and (orientation:portrait){
+
+#rotate-warning{
+display:flex;
+}
+
+.wrapper{
+display:none;
+}
+
+}
+
 </style>
 </head>
-    <body>
-        <div id="rotate-warning">
-            <div class="wrapper">
-                <img src="Imgs/simbolo.svg" class="symbol">
-                <div class="rotate-text">Vire o celular para continuar</div>
-            </div>
-        </div>
 
-        <div class="wrapper">
-            <img src="Imgs/simbolo.svg" class="symbol">
-            <div class="loading-text">Loading...</div>
-            <div class="timer" id="timer"></div>
-        </div>
+<body>
 
-        <script>
-            // Mês começa do 0 (0=Jan)
-            const targetDate = new Date(2026, 2, 10, 20, 0, 0).getTime();
+<!-- AVISO DE VIRAR -->
 
-            function updateTimer() {
-                const now = new Date().getTime();
-                let difference = targetDate - now;
+<div id="rotate-warning">
+    <div class="wrapper">
+        <img src="Imgs/simbolo.svg" class="symbol">
+        <div class="rotate-text">Vire o celular para continuar</div>
+    </div>
+</div>
 
-                if (difference <= 0) {
-                    document.getElementById("timer").innerHTML = "00:00";
-                    return;
-                }
+<!-- TELA PRINCIPAL -->
 
-                const minutes = Math.floor(difference / (1000 * 60));
-                difference %= (1000 * 60);
+<div class="wrapper">
 
-                const seconds = Math.floor(difference / 1000);
+<img src="Imgs/simbolo.svg" class="symbol">
 
-                document.getElementById("timer").innerHTML =
-                    String(minutes).padStart(2, '0') + ":" +
-                    String(seconds).padStart(2, '0');
-            }
+<div class="loading-text" data-text="Loading...">
+Loading...
+</div>
 
-            setInterval(updateTimer, 1000);
+<div class="timer" id="timer" data-text="00:00">
+00:00
+</div>
 
-            let tocando = false; // flag para saber se está tocando
+</div>
 
-            document.addEventListener("click", function () {
-            let player = document.getElementById("ytplayer");
+<script>
 
-            if (!tocando) {
-                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                player.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[20]}', '*');
-                tocando = true;
-            } else {
-                player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                tocando = false;
-            }
-            });
-    </script>
-    </body>
+/* DATA ALVO */
+
+const targetDate = new Date(2026,2,10,20,0,0).getTime();
+
+/* TIMER */
+
+function updateTimer(){
+
+const now = new Date().getTime();
+
+let difference = targetDate - now;
+
+if(difference <= 0){
+
+const timer = document.getElementById("timer");
+
+timer.innerHTML = "00:00";
+timer.setAttribute("data-text","00:00");
+
+return;
+
+}
+
+const minutes = Math.floor(difference/(1000*60));
+
+difference %= (1000*60);
+
+const seconds = Math.floor(difference/1000);
+
+const timeString =
+String(minutes).padStart(2,'0')
++
+":"
++
+String(seconds).padStart(2,'0');
+
+const timer = document.getElementById("timer");
+
+timer.innerHTML = timeString;
+timer.setAttribute("data-text",timeString);
+
+}
+
+setInterval(updateTimer,1000);
+
+updateTimer();
+
+</script>
+
+</body>
 </html>
