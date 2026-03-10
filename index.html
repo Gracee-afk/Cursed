@@ -3,231 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modo Paisagem Obrigatório</title>
 
-<style>
+<title>Cursed</title>
 
-body{
-    margin:0;
-    background:#000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    font-family:Arial, sans-serif;
-    text-align:center;
-}
+<link rel="stylesheet" href="Estilo.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 
-/* containers */
 
-.main-wrapper{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-}
-
-.rotate-wrapper{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:20px;
-}
-
-/* símbolo */
-
-.symbol{
-    width:clamp(90px,18vw,180px);
-    animation:pulse 2s infinite, glow 2s infinite;
-}
-
-/* loading */
-
-.loading-text{
-    color:white;
-    font-size:clamp(16px,3vw,26px);
-    letter-spacing:6px;
-    margin-top:8px;
-    position:relative;
-
-    animation:pulse 2s infinite, textGlow 2s infinite;
-}
-
-/* timer */
-
-.timer{
-    color:white;
-    font-size:clamp(18px,3.5vw,30px);
-    letter-spacing:6px;
-    font-weight:bold;
-    position:relative;
-
-    animation:pulse 2s infinite, textGlow 2s infinite;
-}
-
-/* glitch */
-
-.loading-text::after,
-.timer::after{
-    content:attr(data-text);
-    position:absolute;
-    left:0;
-    top:0;
-    color:red;
-    opacity:0.3;
-    animation:glitchText 2s infinite;
-}
-
-/* aviso virar */
-
-#rotate-warning{
-    position:fixed;
-    inset:0;
-    background:#000;
-    color:white;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
-
-.rotate-text{
-    font-size:22px;
-
-    animation:
-    pulse 2s infinite,
-    textGlow 2s infinite,
-    glitchText 3s infinite;
-}
-
-/* animações */
-
-@keyframes pulse{
-0%{opacity:0.5}
-50%{opacity:1}
-100%{opacity:0.5}
-}
-
-@keyframes glow{
-0%{filter:drop-shadow(0 0 5px red)}
-50%{filter:drop-shadow(0 0 25px red)}
-100%{filter:drop-shadow(0 0 5px red)}
-}
-
-@keyframes textGlow{
-0%{text-shadow:0 0 5px white}
-50%{text-shadow:0 0 10px red,0 0 20px red,0 0 30px red}
-100%{text-shadow:0 0 5px white}
-}
-
-@keyframes glitchText{
-0%{transform:translate(0)}
-20%{transform:translate(-1px,1px)}
-40%{transform:translate(1px,-1px)}
-60%{transform:translate(-1px,-1px)}
-80%{transform:translate(1px,1px)}
-100%{transform:translate(0)}
-}
-
-</style>
 </head>
-
 <body>
-
-<!-- aviso virar -->
-
 <div id="rotate-warning">
-    <div class="rotate-wrapper">
-        <img src="Imgs/simbolo.svg" class="symbol">
-        <div class="rotate-text">Vire o celular para continuar</div>
-    </div>
+<div class="wrapper">
+<img src="Imagens/Simobolo/simbolo.svg" class="symbol">
+<div class="rotate-text">
+Vire o celular para continuar
 </div>
-
-<!-- tela principal -->
-
-<div class="main-wrapper" id="main">
-
-<img src="Imgs/simbolo.svg" class="symbol">
-
-<div class="loading-text" data-text="Loading...">
-Loading...
 </div>
-
-<div class="timer" id="timer" data-text="00:00">
-00:00
 </div>
+<div id="topLoading">
+
+<p id="cMark">
+<span>Carregando...</span>
+<i></i>
+</p>
+
+<div class="topLoading__mask"></div>
 
 </div>
 
-<script>
 
-/* TIMER */
+<div id="blueBg">
+<div class="blueBg__mask"></div>
+</div>
 
-const targetDate = new Date(2026,2,10,20,0,0).getTime();
 
-function updateTimer(){
+<div id="particles"></div>
 
-const now = new Date().getTime();
 
-let difference = targetDate - now;
+<div class="center-screen" id="intro">
 
-if(difference <= 0){
+<h1 id="typewriter"></h1>
 
-timer.innerHTML="00:00";
-timer.setAttribute("data-text","00:00");
+<div class="button-wrapper">
+    <button class="anime-btn" onclick="showDocument()">ACEITAR CONVOCAÇÃO</button>
+</div>
 
-return;
-}
+</div>
 
-const minutes = Math.floor(difference/(1000*60));
 
-difference %= (1000*60);
+<div id="document">
 
-const seconds = Math.floor(difference/1000);
+<h1>Escola Técnica de Jujutsu</h1>
 
-const timeString =
-String(minutes).padStart(2,'0') +
-":" +
-String(seconds).padStart(2,'0');
+<hr>
 
-timer.innerHTML = timeString;
-timer.setAttribute("data-text",timeString);
+<p><strong>Status:</strong> Recruta Temporário</p>
 
-}
+<p><strong>Classificação Provisória:</strong> Não Avaliada</p>
 
-const timer = document.getElementById("timer");
+<p><strong>Nível de Risco:</strong> <span class="risk flicker-text">ALTO</span></p>
 
-setInterval(updateTimer,1000);
+<hr>
 
-updateTimer();
+<p><strong>Incidente Registrado:</strong></p>
 
-/* controle orientação */
+<p>
+Perturbações de energia amaldiçoada detectadas em área urbana isolada.
+Assinatura de maldição: <strong>Classe 2 (Possível)</strong>.
 
-function checkOrientation(){
+<br><br>
 
-const rotate = document.getElementById("rotate-warning");
-const main = document.getElementById("main");
+Possível manifestação inteligente em estágio inicial.
+Aproximação não autorizada resultará em eliminação imediata.
+</p>
 
-if(window.innerHeight > window.innerWidth){
+<hr>
 
-rotate.style.display="flex";
-main.style.display="none";
+<p><strong>Protocolo de Ação:</strong></p>
 
-}else{
+<ul class="objectives-list">
+<li>Investigar a fonte da anomalia</li>
+<li>Confirmar a natureza da maldição</li>
+<li>Conter e purificar</li>
+</ul>
 
-rotate.style.display="none";
-main.style.display="flex";
+<hr>
 
-}
+<div class="quote-box">
+"O medo cria maldições. A coragem cria feiticeiros."
+</div>
 
-}
+<div class="action-area">
 
-window.addEventListener("resize",checkOrientation);
-window.addEventListener("load",checkOrientation);
+<a href="https://chat.whatsapp.com/GVAxebt3e7LKSRiHso1JZn" target="_blank">
 
-</script>
+<button class="btn-confirm">
+CONFIRMAR PRESENÇA
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<script src="Commands.js"></script>
 
 </body>
 </html>
